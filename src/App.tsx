@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Navbar from './component/navbar/Navbar';
+import TodoContainer from './component/todos/TodoContainer';
+import data from './data/todos.json';
+import { ThemeContextProvider, themes } from './context/themeContext';
+import ThemeChanger from './component/themeChanger/ThemeChanger';
+import { TodosContextProvider } from './context/todosContext';
 
 function App() {
+  const [theme, setTheme] = useState(themes.light);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <ThemeContextProvider>
+        <Navbar
+          menu={[
+            { name: 'menu1', link: '/menu1' },
+            { name: 'menu2', link: '/menu2' },
+          ]}
+        />
+        <TodosContextProvider>
+          <TodoContainer />
+        </TodosContextProvider>
+        <ThemeChanger></ThemeChanger>
+      </ThemeContextProvider>
     </div>
   );
 }
